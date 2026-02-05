@@ -25,6 +25,8 @@ Backend service for Smart Logistics Transport System built using Spring Boot.
 ## Author
 Shakthi Nandha
 Backend pull request demo completed.
+echo Backend pull request demo completed. >> README.md
+
 
 
 
