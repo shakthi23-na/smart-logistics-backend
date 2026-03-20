@@ -3,6 +3,7 @@ package com.smartlogistics.smart_logistics_backend.controller;
 import com.smartlogistics.smart_logistics_backend.model.Shipment;
 import com.smartlogistics.smart_logistics_backend.repo.ShipmentRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class ShipmentController {
 
     // ✅ READ ONE BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<Shipment> getOne(@PathVariable Long id) {
+    public ResponseEntity<Shipment> getOne(@PathVariable @NonNull Long id) {
         return repo.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -50,7 +51,7 @@ public class ShipmentController {
 
     // ✅ UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Shipment> update(@PathVariable Long id, @RequestBody Shipment updated) {
+    public ResponseEntity<Shipment> update(@PathVariable @NonNull Long id, @RequestBody Shipment updated) {
         return repo.findById(id).map(existing -> {
             existing.setTrackingNumber(updated.getTrackingNumber());
             existing.setSenderName(updated.getSenderName());
@@ -66,7 +67,7 @@ public class ShipmentController {
 
     // ✅ DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable @NonNull Long id) {
         if (!repo.existsById(id)) return ResponseEntity.notFound().build();
         repo.deleteById(id);
         return ResponseEntity.noContent().build();

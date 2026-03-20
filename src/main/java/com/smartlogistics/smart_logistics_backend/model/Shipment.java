@@ -1,10 +1,17 @@
 package com.smartlogistics.smart_logistics_backend.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "shipments")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Shipment {
 
     @Id
@@ -14,43 +21,41 @@ public class Shipment {
     @Column(unique = true, nullable = false)
     private String trackingNumber;
 
+    @Column(nullable = false)
+    private String status;
+
+    @Column
     private String senderName;
+
+    @Column
     private String receiverName;
 
+    @Column
     private String pickupCity;
+
+    @Column
     private String dropCity;
 
-    private String status; // CREATED, IN_TRANSIT, DELIVERED, CANCELLED
+    @Column
     private String vehicleNumber;
 
-    private LocalDate expectedDeliveryDate;
+    @Column
+    private LocalDateTime expectedDeliveryDate;
 
-    public Shipment() {}
+    @Column
+    private LocalDateTime createdAt;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @Column
+    private LocalDateTime updatedAt;
 
-    public String getTrackingNumber() { return trackingNumber; }
-    public void setTrackingNumber(String trackingNumber) { this.trackingNumber = trackingNumber; }
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
-
-    public String getReceiverName() { return receiverName; }
-    public void setReceiverName(String receiverName) { this.receiverName = receiverName; }
-
-    public String getPickupCity() { return pickupCity; }
-    public void setPickupCity(String pickupCity) { this.pickupCity = pickupCity; }
-
-    public String getDropCity() { return dropCity; }
-    public void setDropCity(String dropCity) { this.dropCity = dropCity; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public String getVehicleNumber() { return vehicleNumber; }
-    public void setVehicleNumber(String vehicleNumber) { this.vehicleNumber = vehicleNumber; }
-
-    public LocalDate getExpectedDeliveryDate() { return expectedDeliveryDate; }
-    public void setExpectedDeliveryDate(LocalDate expectedDeliveryDate) { this.expectedDeliveryDate = expectedDeliveryDate; }
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
