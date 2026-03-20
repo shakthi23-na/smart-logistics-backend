@@ -60,3 +60,6 @@ https://github.com/devops-project-bca/smart-logistics-frontend
 
 👉 Live Frontend URL (Vercel):
 https://smart-logistics-frontend-mocha.vercel.app
+
+👉 Live Frontend URL (Azure):
+https://gray-dune-0b862e200.4.azurestaticapps.net
