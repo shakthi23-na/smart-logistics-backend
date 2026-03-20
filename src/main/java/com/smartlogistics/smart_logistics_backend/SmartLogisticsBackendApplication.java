@@ -1,4 +1,4 @@
-package com.smartlogistics;
+package com.smartlogistics.smart_logistics_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

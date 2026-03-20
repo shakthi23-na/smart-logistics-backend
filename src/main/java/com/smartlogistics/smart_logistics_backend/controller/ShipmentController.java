@@ -1,7 +1,7 @@
-package com.smartlogistics.controller;
+package com.smartlogistics.smart_logistics_backend.controller;
 
-import com.smartlogistics.model.Shipment;
-import com.smartlogistics.repo.ShipmentRepository;
+import com.smartlogistics.smart_logistics_backend.model.Shipment;
+import com.smartlogistics.smart_logistics_backend.repo.ShipmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/shipments")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ShipmentController {
 
     private final ShipmentRepository repo;

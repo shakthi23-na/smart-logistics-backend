@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "pom.xml",
+      "use": "@vercel/java"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "env": {
+    "JAVA_TOOL_OPTIONS": "-Dfile.encoding=UTF-8"
+  }
+}

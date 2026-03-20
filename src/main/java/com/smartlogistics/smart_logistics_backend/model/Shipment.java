@@ -1,4 +1,4 @@
-package com.smartlogistics.model;
+package com.smartlogistics.smart_logistics_backend.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
