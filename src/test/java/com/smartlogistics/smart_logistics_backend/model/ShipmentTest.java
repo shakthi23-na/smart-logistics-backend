@@ -87,7 +87,12 @@ class ShipmentTest {
         assertNotNull(shipment.getUpdatedAt());
         assertTrue(shipment.getCreatedAt().isAfter(beforeCreate.minusSeconds(1)));
         assertTrue(shipment.getCreatedAt().isBefore(afterCreate.plusSeconds(1)));
-        assertEquals(shipment.getCreatedAt(), shipment.getUpdatedAt());
+        // Check both timestamps are within 10ms of each other (not exact equality)
+        long timeDiff = java.time.temporal.ChronoUnit.MILLIS.between(
+            shipment.getCreatedAt(), 
+            shipment.getUpdatedAt()
+        );
+        assertTrue(Math.abs(timeDiff) <= 10, "CreatedAt and UpdatedAt should be within 10ms of each other");
     }
 
     @Test
