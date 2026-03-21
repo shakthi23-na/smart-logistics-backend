@@ -27,10 +27,6 @@ public class ShipmentController {
                 shipment.setStatus("CREATED");
             }
 
-            if (repo.findByTrackingNumber(shipment.getTrackingNumber()).isPresent()) {
-                return ResponseEntity.badRequest().body("Tracking number already exists!");
-            }
-
             Shipment saved = repo.save(shipment);
             return ResponseEntity.ok(saved);
 
