@@ -1,19 +1,17 @@
 package com.smartlogistics.smart_logistics_backend.config;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class CorsConfigTest {
 
+    @Autowired
     private CorsConfig corsConfig;
-
-    @BeforeEach
-    void setUp() {
-        corsConfig = new CorsConfig();
-    }
 
     @Test
     void testCorsConfigurationBeanExists() {
@@ -87,6 +85,7 @@ class CorsConfigTest {
         assertTrue(allowedOrigins.contains("http://127.0.0.1:3000"));
         assertTrue(allowedOrigins.contains("http://127.0.0.1:5173"));
         assertTrue(allowedOrigins.contains("https://smart-logistics-frontend-mocha.vercel.app"));
+        assertTrue(allowedOrigins.contains("https://gray-dune-0b862e200.4.azurestaticapps.net"));
     }
 
     @Test
@@ -98,6 +97,6 @@ class CorsConfigTest {
         assertNotNull(corsConfiguration);
         var allowedOrigins = corsConfiguration.getAllowedOrigins();
         assertNotNull(allowedOrigins);
-        assertEquals(5, allowedOrigins.size());
+        assertEquals(6, allowedOrigins.size());
     }
 }
