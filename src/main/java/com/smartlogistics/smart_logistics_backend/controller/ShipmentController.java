@@ -5,6 +5,8 @@ import com.smartlogistics.smart_logistics_backend.repo.ShipmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @RequestMapping("/api/shipments")
 @CrossOrigin(origins = "*")
 public class ShipmentController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShipmentController.class);
 
     private final ShipmentRepository repo;
 
@@ -23,16 +27,23 @@ public class ShipmentController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Shipment shipment) {
         try {
+            logger.info("Creating shipment with tracking number: {}", shipment.getTrackingNumber());
+            
             if (shipment.getStatus() == null || shipment.getStatus().isBlank()) {
                 shipment.setStatus("CREATED");
             }
 
             Shipment saved = repo.save(shipment);
+            logger.info("Shipment created successfully with ID: {}", saved.getId());
             return ResponseEntity.ok(saved);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+            logger.error("Error creating shipment", e);
+            String errorMsg = "Error: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+            if (e.getCause() != null) {
+                errorMsg += " | Cause: " + e.getCause().getMessage();
+            }
+            return ResponseEntity.badRequest().body(errorMsg);
         }
     }
 
