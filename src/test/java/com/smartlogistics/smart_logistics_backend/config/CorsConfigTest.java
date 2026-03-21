@@ -29,6 +29,7 @@ class CorsConfigTest {
         var corsConfiguration = corsConfigurationSource.getCorsConfiguration(request);
         assertNotNull(corsConfiguration);
         var allowedMethods = corsConfiguration.getAllowedMethods();
+        assertNotNull(allowedMethods);
         assertTrue(allowedMethods.contains("GET"));
         assertTrue(allowedMethods.contains("POST"));
         assertTrue(allowedMethods.contains("PUT"));
@@ -44,7 +45,9 @@ class CorsConfigTest {
         var corsConfigurationSource = corsConfig.corsConfigurationSource();
         var corsConfiguration = corsConfigurationSource.getCorsConfiguration(request);
         assertNotNull(corsConfiguration);
-        assertTrue(corsConfiguration.getAllowedHeaders().contains("*"));
+        var allowedHeaders = corsConfiguration.getAllowedHeaders();
+        assertNotNull(allowedHeaders);
+        assertTrue(allowedHeaders.contains("*"));
     }
 
     @Test
@@ -54,7 +57,9 @@ class CorsConfigTest {
         var corsConfigurationSource = corsConfig.corsConfigurationSource();
         var corsConfiguration = corsConfigurationSource.getCorsConfiguration(request);
         assertNotNull(corsConfiguration);
-        assertTrue(corsConfiguration.getAllowCredentials());
+        Boolean allowCredentials = corsConfiguration.getAllowCredentials();
+        assertNotNull(allowCredentials);
+        assertTrue(allowCredentials);
     }
 
     @Test
@@ -75,6 +80,7 @@ class CorsConfigTest {
         var corsConfiguration = corsConfigurationSource.getCorsConfiguration(request);
         assertNotNull(corsConfiguration);
         var allowedOrigins = corsConfiguration.getAllowedOrigins();
+        assertNotNull(allowedOrigins);
         
         assertTrue(allowedOrigins.contains("http://localhost:3000"));
         assertTrue(allowedOrigins.contains("http://localhost:5173"));
@@ -90,6 +96,8 @@ class CorsConfigTest {
         var corsConfigurationSource = corsConfig.corsConfigurationSource();
         var corsConfiguration = corsConfigurationSource.getCorsConfiguration(request);
         assertNotNull(corsConfiguration);
-        assertEquals(5, corsConfiguration.getAllowedOrigins().size());
+        var allowedOrigins = corsConfiguration.getAllowedOrigins();
+        assertNotNull(allowedOrigins);
+        assertEquals(5, allowedOrigins.size());
     }
 }

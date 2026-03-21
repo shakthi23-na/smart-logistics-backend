@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/shipments")
+@CrossOrigin(origins = "*")
 public class ShipmentController {
 
     private final ShipmentRepository repo;
@@ -20,11 +21,23 @@ public class ShipmentController {
 
     // ✅ CREATE
     @PostMapping
-    public ResponseEntity<Shipment> create(@RequestBody Shipment shipment) {
-        if (shipment.getStatus() == null || shipment.getStatus().isBlank()) {
-            shipment.setStatus("CREATED");
+    public ResponseEntity<?> create(@RequestBody Shipment shipment) {
+        try {
+            if (shipment.getStatus() == null || shipment.getStatus().isBlank()) {
+                shipment.setStatus("CREATED");
+            }
+
+            if (repo.findByTrackingNumber(shipment.getTrackingNumber()).isPresent()) {
+                return ResponseEntity.badRequest().body("Tracking number already exists!");
+            }
+
+            Shipment saved = repo.save(shipment);
+            return ResponseEntity.ok(saved);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-        return ResponseEntity.ok(repo.save(shipment));
     }
 
     // ✅ READ ALL
@@ -41,7 +54,7 @@ public class ShipmentController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ READ ONE BY TRACKING NUMBER (smart search)
+    // ✅ READ BY TRACKING NUMBER
     @GetMapping("/tracking/{trackingNumber}")
     public ResponseEntity<Shipment> getByTracking(@PathVariable String trackingNumber) {
         return repo.findByTrackingNumber(trackingNumber)
@@ -51,18 +64,27 @@ public class ShipmentController {
 
     // ✅ UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Shipment> update(@PathVariable @NonNull Long id, @RequestBody Shipment updated) {
-        return repo.findById(id).map(existing -> {
-            existing.setTrackingNumber(updated.getTrackingNumber());
-            existing.setSenderName(updated.getSenderName());
-            existing.setReceiverName(updated.getReceiverName());
-            existing.setPickupCity(updated.getPickupCity());
-            existing.setDropCity(updated.getDropCity());
-            existing.setStatus(updated.getStatus());
-            existing.setVehicleNumber(updated.getVehicleNumber());
-            existing.setExpectedDeliveryDate(updated.getExpectedDeliveryDate());
-            return ResponseEntity.ok(repo.save(existing));
-        }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> update(@PathVariable @NonNull Long id, @RequestBody Shipment updated) {
+        try {
+            return repo.findById(id).map(existing -> {
+
+                existing.setTrackingNumber(updated.getTrackingNumber());
+                existing.setSenderName(updated.getSenderName());
+                existing.setReceiverName(updated.getReceiverName());
+                existing.setPickupCity(updated.getPickupCity());
+                existing.setDropCity(updated.getDropCity());
+                existing.setStatus(updated.getStatus());
+                existing.setVehicleNumber(updated.getVehicleNumber());
+                existing.setExpectedDeliveryDate(updated.getExpectedDeliveryDate());
+
+                return ResponseEntity.ok(repo.save(existing));
+
+            }).orElse(ResponseEntity.notFound().build());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
 
     // ✅ DELETE

@@ -1,10 +1,12 @@
 package com.smartlogistics.smart_logistics_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -39,8 +41,9 @@ public class Shipment {
     @Column
     private String vehicleNumber;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column
-    private LocalDateTime expectedDeliveryDate;
+    private LocalDate expectedDeliveryDate;
 
     @Column
     private LocalDateTime createdAt;

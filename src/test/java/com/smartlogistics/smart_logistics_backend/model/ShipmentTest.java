@@ -3,6 +3,7 @@ package com.smartlogistics.smart_logistics_backend.model;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,9 +12,10 @@ class ShipmentTest {
     @Test
     void testShipmentCreationWithAllArgs() {
         LocalDateTime now = LocalDateTime.now();
+        LocalDate expectedDate = LocalDate.now().plusDays(5);
         Shipment shipment = new Shipment(1L, "TRACK123", "CREATED", 
             "John Doe", "Jane Smith", "New York", "Los Angeles", 
-            "VH123", now.plusDays(5), now, now);
+            "VH123", expectedDate, now, now);
 
         assertEquals(1L, shipment.getId());
         assertEquals("TRACK123", shipment.getTrackingNumber());
@@ -49,6 +51,7 @@ class ShipmentTest {
     void testShipmentSettersAndGetters() {
         Shipment shipment = new Shipment();
         LocalDateTime now = LocalDateTime.now();
+        LocalDate expectedDate = LocalDate.now();
 
         shipment.setId(5L);
         shipment.setTrackingNumber("TRACK456");
@@ -58,7 +61,7 @@ class ShipmentTest {
         shipment.setPickupCity("Chicago");
         shipment.setDropCity("Miami");
         shipment.setVehicleNumber("VH456");
-        shipment.setExpectedDeliveryDate(now);
+        shipment.setExpectedDeliveryDate(expectedDate);
         shipment.setCreatedAt(now);
         shipment.setUpdatedAt(now);
 
@@ -70,7 +73,7 @@ class ShipmentTest {
         assertEquals("Chicago", shipment.getPickupCity());
         assertEquals("Miami", shipment.getDropCity());
         assertEquals("VH456", shipment.getVehicleNumber());
-        assertEquals(now, shipment.getExpectedDeliveryDate());
+        assertEquals(expectedDate, shipment.getExpectedDeliveryDate());
         assertEquals(now, shipment.getCreatedAt());
         assertEquals(now, shipment.getUpdatedAt());
     }
@@ -114,13 +117,14 @@ class ShipmentTest {
     @Test
     void testShipmentEquality() {
         LocalDateTime now = LocalDateTime.now();
+        LocalDate expectedDate = LocalDate.now();
         Shipment shipment1 = new Shipment(1L, "TRACK123", "CREATED", 
             "John Doe", "Jane Smith", "New York", "Los Angeles", 
-            "VH123", now, now, now);
+            "VH123", expectedDate, now, now);
         
         Shipment shipment2 = new Shipment(1L, "TRACK123", "CREATED", 
             "John Doe", "Jane Smith", "New York", "Los Angeles", 
-            "VH123", now, now, now);
+            "VH123", expectedDate, now, now);
         
         assertEquals(shipment1, shipment2);
     }

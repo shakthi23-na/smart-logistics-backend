@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SuppressWarnings("null")
 @WebMvcTest(ShipmentController.class)
 class ShipmentControllerTest {
 
@@ -47,7 +49,7 @@ class ShipmentControllerTest {
         testShipment.setPickupCity("New York");
         testShipment.setDropCity("Los Angeles");
         testShipment.setVehicleNumber("VH123");
-        testShipment.setExpectedDeliveryDate(LocalDateTime.now().plusDays(5));
+        testShipment.setExpectedDeliveryDate(LocalDate.now().plusDays(5));
         testShipment.setCreatedAt(LocalDateTime.now());
         testShipment.setUpdatedAt(LocalDateTime.now());
     }
@@ -190,7 +192,7 @@ class ShipmentControllerTest {
         updatedShipment.setDropCity("Miami");
         updatedShipment.setStatus("IN_TRANSIT");
         updatedShipment.setVehicleNumber("VH456");
-        updatedShipment.setExpectedDeliveryDate(LocalDateTime.now().plusDays(3));
+        updatedShipment.setExpectedDeliveryDate(LocalDate.now().plusDays(3));
 
         when(shipmentRepository.findById(1L)).thenReturn(Optional.of(testShipment));
         when(shipmentRepository.save(any())).thenReturn(testShipment);
