@@ -2,8 +2,8 @@ package com.smartlogistics.smart_logistics_backend.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
