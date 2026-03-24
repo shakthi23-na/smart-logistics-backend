@@ -21,22 +21,13 @@ public class CorsConfig {
         
         // Allow requests from these origins
         configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
-        
-        // Allow these HTTP methods
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        
-        // Allow these headers
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        
-        // Allow credentials (cookies, authorization headers)
         configuration.setAllowCredentials(true);
-        
-        // Max age for pre-flight requests
         configuration.setMaxAge(3600L);
-        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        
+        // Map only /api/** endpoints for CORS
+        source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
 }
