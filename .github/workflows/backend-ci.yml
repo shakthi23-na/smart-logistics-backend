@@ -30,9 +30,9 @@ jobs:
 
       - name: SonarCloud Analysis
         run: |
-          mvn sonar:sonar \
-          -Dsonar.projectKey=YOUR_PROJECT_KEY \
-          -Dsonar.organization=YOUR_ORGANIZATION \
+          mvn clean verify sonar:sonar \
+          -Dsonar.projectKey=devops-project-bca_smart-logistics-backend \
+          -Dsonar.organization=devops-project-bca \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
           -Dsonar.coverage.exclusions=** \
